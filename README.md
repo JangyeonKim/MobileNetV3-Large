@@ -1,2 +1,2 @@
-# MobileNetV3-Large
-for audio classification
+# audio classification
+mobileNet & efficientNet for audio classification
