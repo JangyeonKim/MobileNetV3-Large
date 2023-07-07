@@ -1,9 +1,11 @@
 import torch
 import os
 
-exp_name = "mobileNetV3-Large_CELoss"
+model_name = "efficientnet_v2_s"
+
+exp_name = "efficientnet_v2_s"
 test_result_dir = "/home/jykim/work/MobileNetV3-Large/csvs & confusion matrix"
-checkpoint_path = "/home/jykim/work/MobileNetV3-Large/result/lightning_logs/large_ce/checkpoints/epoch=19-val_loss=0.0000-val_acc=1.0000-v1.ckpt"
+checkpoint_path = "/home/jykim/work/MobileNetV3-Large/result/lightning_logs/efficientnet_v2_s/checkpoints/epoch=18-val_loss=0.0028-val_acc=0.9982.ckpt"
 confusion_labels = ['Vehicle', 'Footsteps', 'Other']
 
 num_gpu = [0]
@@ -14,7 +16,7 @@ max_epoch = 20
 random_seed = 42
 
 classes_num = 3
-batch_size = 256
+batch_size =64 # MN : 256 # e-b0,b1,b2: 128 # e-v2-s, b3 : 64
 num_workers = 8
 ####################
 dataset_path = "/home/jykim/work/HTS-AT/aihub_dataset/v2_MotorAndCar"

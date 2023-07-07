@@ -43,8 +43,8 @@ class Engine(pl.LightningModule) :
         y_hat = self.model(mel_spec_x)
         # pdb.set_trace()
         
-        # loss = nn.CrossEntropyLoss()(y_hat, y)
-        loss = nn.BCEWithLogitsLoss()(y_hat, y)
+        loss = nn.CrossEntropyLoss()(y_hat, y)
+        # loss = nn.BCEWithLogitsLoss()(y_hat, y)
         self.log("train_loss", loss, on_epoch=True, prog_bar=True, logger=True, batch_size=config.batch_size)
         return loss
     
@@ -55,8 +55,8 @@ class Engine(pl.LightningModule) :
         mel_spec_x = mel_spec_x.repeat(1, 3, 1, 1)
         y_hat = self.model(mel_spec_x)
         
-        # loss = nn.CrossEntropyLoss()(y_hat, y)
-        loss = nn.BCEWithLogitsLoss()(y_hat, y)
+        loss = nn.CrossEntropyLoss()(y_hat, y)
+        # loss = nn.BCEWithLogitsLoss()(y_hat, y)
         self.log("val_loss", loss, on_epoch=True, prog_bar=True, logger=True, batch_size=config.batch_size)
         
         return [y_hat.detach(), y.detach()]

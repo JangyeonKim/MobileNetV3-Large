@@ -14,10 +14,21 @@ import lightning_fabric as lf
 from engine import Engine
 from dataset import JY_Dataset
 from models.mobileNet import mobilenet_v3_large, mobilenet_v3_small
-
-parser = argparse.ArgumentParser()
+from models.efficientNet import efficientNet_b0,efficientNet_b1,efficientNet_b2, efficientNet_b3, efficientNet_v2_s, efficientNet_v2_m
+parser = argparse.ArgumentParser() 
 parser.add_argument('--mode', type=str, default='train')
 args = parser.parse_args()
+
+model_dict = {
+        "mobilenet_v3_large" : mobilenet_v3_large(config),
+        "mobilenet_v3_small" : mobilenet_v3_small(config),
+        "efficientnet_b0" : efficientNet_b0(config),
+        "efficientnet_b1" : efficientNet_b1(config),
+        "efficientnet_b2" : efficientNet_b2(config),
+        "efficientnet_b3" : efficientNet_b3(config),
+        "efficientnet_v2_s" : efficientNet_v2_s(config),
+        "efficientnet_v2_m" : efficientNet_v2_m(config)
+    }
 
 def train() :
     lf.utilities.seed.seed_everything(seed = config.random_seed)
@@ -27,8 +38,9 @@ def train() :
     
     train_dataloader = DataLoader(train_dataset, batch_size=config.batch_size, shuffle=True, num_workers=config.num_workers)
     val_dataloader = DataLoader(val_dataset, batch_size=config.batch_size, shuffle=False, num_workers=config.num_workers)
-    
-    model = mobilenet_v3_large(config)
+
+    model = model_dict[config.model_name]
+    # model = mobilenet_v3_large(config)
     # model = mobilenet_v3_small(config)
     
     engine = Engine(model)
@@ -66,7 +78,8 @@ def test() :
     test_dataset = JY_Dataset(dataset = np.load(os.path.join(config.dataset_path, "test.npy"), allow_pickle = True), config = config)
     train_dataloader = DataLoader(test_dataset, batch_size=config.batch_size, shuffle=False, num_workers=config.num_workers)
 
-    model = mobilenet_v3_large(config)
+    model = model_dict[config.model_name]
+    # model = mobilenet_v3_large(config)
     # model = mobilenet_v3_small(config)
     
     # if config.checkpoint_path is not None :
